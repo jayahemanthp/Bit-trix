@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1774807074" />
+    <testcase name="test_latency" classname="test_latency" file="/home/tarun401/Downloads/bit-trix/Bit-trix/example/latency_tb/test_latency.py" lineno="35" time="0.0014922618865966797" sim_time_ns="290.001" ratio_time="194336.53208244126" />
+  </testsuite>
+</testsuites>
