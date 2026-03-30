@@ -6,8 +6,8 @@
 1. Fork this repository to your own account.  
 2. Clone your fork locally:
 ```bash
-git clone <your-fork-url>
-cd <repo-name>
+git clone [<your-fork-url>](https://github.com/jayahemanthp/Bit-trix.git)
+cd Bit-trix
 ````
 
 ---
@@ -17,7 +17,7 @@ cd <repo-name>
 1. Navigate to the simulation directory:
 
 ```bash
-cd sim
+cd testbench
 ```
 
 2. Run the simulation:
@@ -27,24 +27,6 @@ make
 ```
 
 The output will display the total cycle count and corresponding time using the `cycle_count` register.
-
----
-
-## Writing Your Own Cocotb Testbench
-
-Create a new testbench:
-
-```bash
-sim/test_<name>.py
-```
-
-Update the Makefile:
-
-```makefile
-MODULE = test_<name>
-```
-
-Follow the inline comments in the existing testbench to make required changes.
 
 ---
 
