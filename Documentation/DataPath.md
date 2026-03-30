@@ -75,25 +75,27 @@ Memory Data → Register File Write (for LOAD)
 - Memory operations occur in this stage
 
 ## Data Flow for FFT Butterfly
+```diagram
 ┌─────────────────────────────────────────────────────────┐
-│ Butterfly Data Flow │
+│ Butterfly Data Flow                                     │
 ├─────────────────────────────────────────────────────────┤
-│ │
-│ RAM → Register File (LOAD) │
-│ │ │
-│ ▼ │
-│ R2 = A_real, R3 = B_real │
-│ │ │
-│ ▼ │
-│ Butterfly Unit (hardware accelerated) │
-│ │ │
-│ ▼ │
-│ R0 = A' (result) │
-│ │ │
-│ ▼ │
-│ Register File → RAM (STORE) │
-│ │
+│                                                         │
+│             RAM → Register File (LOAD)                  │
+│              │                                          │
+│              ▼                                          │
+│             R2 = A_real, R3 = B_real                    │
+│             │                                           │
+│             ▼                                           │
+│           Butterfly Unit (hardware accelerated)         │
+│             │                                           │
+│             ▼                                           │
+│           R0 = A' (result)                              │
+│             │                                           │
+│             ▼                                           │
+│          Register File → RAM (STORE)                    │
+│                                                         │
 └─────────────────────────────────────────────────────────┘
+```
 
 ## Memory Access Patterns
 
