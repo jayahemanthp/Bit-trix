@@ -1,5 +1,7 @@
 # Datapath Explanation and Register Usage Strategy
 
+![bittrix_system_architecture](bittrix_system_architecture.svg)
+
 ## Register Allocation Strategy
 
 ### Register Roles
