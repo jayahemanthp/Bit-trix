@@ -22,35 +22,35 @@ This project demonstrates a complete system-on-chip design that:
 - **Cycle-accurate simulation** support
 
 ## Architecture
-┌─────────────────────────────────────────────────────────┐<br>
-│             Impulse Response Processor                  │<br>
-├─────────────────────────────────────────────────────────┤<br>
-│                                                         │<br>
-│ ┌──────────────┐     ┌──────────────┐                   │<br>
-│ │ FSM          │───▶│ Butterfly    │                   │<br>
-│ │ Sequencer    │     │ Unit         │                   │<br>
-│ └──────────────┘     └──────────────┘                   │<br>
-│     │                       │                           │<br>
-│     ▼                       ▼                           │<br>
-│ ┌──────────────┐      ┌──────────────┐                  │<br>
-│ │ Register     │◀──▶ │     ALU      │                  │<br>
-│ │ File         │      │              │                  │<br>
-│ └──────────────┘      └──────────────┘                  │<br>
-│ │ │ │
-│ └─────────┬─────────┘ │
-│ ▼ │
-│ ┌──────────────┐ │
-│ │ RAM │ │
-│ │ (64×8) │ │
-│ └──────────────┘ │
-│ │ │
-│ ┌──────▼──────┐ │
-│ │ Complex │ │
-│ │ Divider │ │
-│ └─────────────┘ │
+```diagram
+┌─────────────────────────────────────────────────────────┐
+│             Impulse Response Processor                  │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│ ┌──────────────┐     ┌──────────────┐                   │
+│ │ FSM          │───▶│ Butterfly    │                   │
+│ │ Sequencer    │     │ Unit         │                   │
+│ └──────────────┘     └──────────────┘                   │
+│     │                       │                           │
+│     ▼                       ▼                           │
+│ ┌──────────────┐      ┌──────────────┐                  │
+│ │ Register     │◀──▶ │     ALU      │                  │
+│ │ File         │      │              │                  │
+│ └──────────────┘      └──────────────┘                  │
+│         │                   │                           │
+│         └─────────┬─────────┘                           │
+|                   ▼                                     │
+│             ┌──────────────┐                            │
+│             │ RAM          │                            │
+│             │ (64×8)       │                            │
+│             └──────────────┘                            │
+│                    │                                    │
+│             ┌──────▼──────┐                             │
+│             │ Complex     │                             │
+│             │ Divider     │                             │
+│             └─────────────┘                             │
 └─────────────────────────────────────────────────────────┘
-
-text
+```
 
 ## Memory Map
 
@@ -151,7 +151,7 @@ make SIM_ARGS=--wave
 make TESTCASE=test_impulse_processor
 ```
 # Project Structure
-
+```directory
 impulse-response-processor/
 ├── src/
 │   ├── top.v                 # Top-level module with FSM
@@ -175,7 +175,7 @@ impulse-response-processor/
 │   ├── assembly_program.asm  # Reference assembly code
 │   └── opcode_gen.py         # Opcode generator
 └── README.md
-
+```
 # Test Cases
 
 The testbench includes multiple test cases:
