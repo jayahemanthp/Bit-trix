@@ -6,7 +6,7 @@
 1. Fork this repository to your own account.  
 2. Clone your fork locally:
 ```bash
-git clone [<your-fork-url>](https://github.com/jayahemanthp/Bit-trix.git)
+git clone https://github.com/jayahemanthp/Bit-trix.git
 cd Bit-trix
 ````
 
