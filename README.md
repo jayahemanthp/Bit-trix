@@ -51,6 +51,7 @@ This project demonstrates a complete system-on-chip design that:
 │             └─────────────┘                             │
 └─────────────────────────────────────────────────────────┘
 ```
+![bit-trix_system_architecture](bittrix_system_architecture.svg)
 
 ## Memory Map
 
