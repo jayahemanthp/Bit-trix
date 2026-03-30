@@ -1,45 +1,52 @@
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge
+import logging
 
-# Clock period (must match your Clock below)
 CLK_PERIOD_NS = 10
 
-# ---------------------------
-# Reset
-# ---------------------------
-async def reset_dut(dut):
-    dut.rst.value = 1
-    for _ in range(5):
-        await RisingEdge(dut.clk)
-    dut.rst.value = 0
-
-# ---------------------------
-# Test: Pretty print cycle count
-# ---------------------------
 @cocotb.test()
-async def test_cycle_count(dut):
-
+async def test_impulse_response(dut):
+    """Test the impulse response processor with x[n]=[8,0,...], y[n]=[8,8,0,...]"""
     # Start clock
     cocotb.start_soon(Clock(dut.clk, CLK_PERIOD_NS, units="ns").start())
 
-    dut.instr.value = 0
+    # Reset and preload RAM with test vectors
+    dut.rst.value = 1
+    await RisingEdge(dut.clk)
 
-    await reset_dut(dut)
+    # Backdoor write: x[n] = [8,0,0,0,0,0,0,0]
+    dut.u_ram.mem[0].value = 8
+    for i in range(1, 8):
+        dut.u_ram.mem[i].value = 0
 
-    # Run simulation for some cycles
-    for _ in range(50):
+    # y[n] = [8,8,0,0,0,0,0,0]
+    for i in range(8):
+        dut.u_ram.mem[0x08 + i].value = 8 if i < 2 else 0
+
+    # Release reset
+    dut.rst.value = 0
+    await RisingEdge(dut.clk)
+
+    # Wait for FSM to reach S_DONE (state == 6)
+    while True:
         await RisingEdge(dut.clk)
+        if dut.state.value == 6:
+            break
 
-    # Read final cycle count
+    # Read computed h[n] from RAM (addresses 0x38..0x3F)
+    h = []
+    for i in range(8):
+        h.append(int(dut.u_ram.mem[0x38 + i].value))
+
+    expected = [1, 1, 0, 0, 0, 0, 0, 0]
+    if h == expected:
+        cocotb.log.info("PASS: h[n] matches expected")
+    else:
+        cocotb.log.error(f"FAIL: h[n] = {h}, expected {expected}")
+
     total_cycles = int(dut.cycle_count.value)
-
-    # Convert to time
     total_time_ns = total_cycles * CLK_PERIOD_NS
-
-    # ---------------------------
-    # Pretty Print
-    # ---------------------------
     cocotb.log.info("=" * 50)
     cocotb.log.info("⏱️  SIMULATION SUMMARY")
     cocotb.log.info("=" * 50)
